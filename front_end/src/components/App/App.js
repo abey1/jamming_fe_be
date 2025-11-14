@@ -86,6 +86,7 @@ class App extends React.Component {
 
   updateSearchTerm(newSearchTerm) {
     this.setState({ searchTerm: newSearchTerm });
+    localStorage.setItem("spotify_search_term", newSearchTerm);
   }
 
   savePlaylist() {

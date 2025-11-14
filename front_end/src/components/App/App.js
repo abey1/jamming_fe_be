@@ -54,6 +54,16 @@ class App extends React.Component {
         this.setState({ accessToken: storedToken, expiresIn: storedExpires });
       }
     }
+
+    //-------------------------------------------------------------------------------
+    //--------------------check localstorage for search term-------------------------
+    //-------------------------------------------------------------------------------
+
+    const savedSearchTerm = localStorage.getItem("spotify_search_term");
+    if (savedSearchTerm) {
+      localStorage.removeItem("spotify_search_term");
+      this.search(savedSearchTerm);
+    }
   }
 
   addTrack(newTrack) {

@@ -12,10 +12,12 @@ class App extends React.Component {
       searchResults: [],
       playListName: "My Playlist",
       playListTracks: [],
+      searchTerm: "",
     };
     this.addTrack = this.addTrack.bind(this);
     this.removeTrack = this.removeTrack.bind(this);
     this.updatePlaylistName = this.updatePlaylistName.bind(this);
+    this.updateSearchTerm = this.updateSearchTerm.bind(this);
     this.savePlaylist = this.savePlaylist.bind(this);
     this.search = this.search.bind(this);
   }
@@ -82,6 +84,10 @@ class App extends React.Component {
     this.setState({ playListName: newPlaylistName });
   }
 
+  updateSearchTerm(newSearchTerm) {
+    this.setState({ searchTerm: newSearchTerm });
+  }
+
   savePlaylist() {
     console.log("in save playlist", this.state.playListTracks);
     const trackUris = this.state.playListTracks.map((track) => track.uri);
@@ -99,7 +105,7 @@ class App extends React.Component {
     console.log(data);
     const tracks = data?.tracks?.items || [];
 
-    const trackUris = tracks.map((track) => {
+    const searchedTracks = tracks.map((track) => {
       //  return track.uri;
       return {
         id: track.id,
@@ -111,7 +117,8 @@ class App extends React.Component {
     });
 
     //save track uris to the search results
-    this.setState({ searchResults: trackUris });
+    this.setState({ searchResults: searchedTracks });
+    this.setState({ searchTerm: "" });
   }
 
   render() {
@@ -122,7 +129,11 @@ class App extends React.Component {
         </h1>
         <div className="App">
           {/* Add a SearchBar component */}
-          <SearchBar onSearch={this.search} />
+          <SearchBar
+            onSearch={this.search}
+            onTermChange={this.updateSearchTerm}
+            searchTerm={this.state.searchTerm}
+          />
           <div className="App-playlist">
             {/* Add a SearchResults component */}
             <SearchResults

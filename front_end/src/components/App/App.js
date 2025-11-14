@@ -97,7 +97,7 @@ class App extends React.Component {
     // this.state.searchResults =
     const data = await Spotify.search(searchTerm);
     console.log(data);
-    const tracks = data.tracks.items;
+    const tracks = data?.tracks?.items || [];
 
     const trackUris = tracks.map((track) => {
       //  return track.uri;
